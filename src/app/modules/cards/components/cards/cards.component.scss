@@ -1,0 +1,318 @@
+.cards {
+  padding: 60px;
+
+  .available-balance {
+    &-icon {
+      width: 40px;
+      height: 24px;
+      background: green;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      background-color: #01d167;
+      color: white;
+    }
+
+    &-amt {
+      font-size: 26px;
+      font-weight: bold;
+    }
+  }
+
+  .new-card {
+    background-color: #325baf;
+    height: 35px;
+    width: 110px;
+    color: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: bold;
+    gap: 8px;
+  }
+
+  &-toggle {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+
+    div {
+      color: #222222;
+      opacity: 30%;
+      cursor: pointer;
+
+      &.selected {
+        opacity: 100%;
+        font-weight: bold;
+        border-bottom: 2px solid #23cefd;
+        cursor: auto;
+      }
+    }
+  }
+
+  .amt-info {
+    margin-top: 18px;
+    gap: 12px;
+  }
+
+  &-container {
+    box-shadow: 0 2px 12px 0px #00000014;
+    padding: 40px;
+    border-radius: 4px;
+    margin-top: 16px;
+
+    &-section {
+      &-1,
+      &-2 {
+        width: 48%;
+
+        > div {
+          margin-bottom: 24px;
+        }
+      }
+    }
+
+    .container-border {
+      border: 1px solid #f0f0f0;
+      border-radius: 10px;
+      background-color: white;
+    }
+
+    .show-card {
+      font-size: 12px;
+      display: flex;
+      justify-content: end;
+      margin: auto auto 12px auto;
+      font-weight: bold;
+      color: #01d167;
+      padding-right: 10px;
+      width: 414px;
+
+      div {
+        gap: 6px;
+      }
+
+      img {
+        height: 16px;
+        width: 16px;
+      }
+    }
+
+    .debit-card {
+      height: 248px;
+      background-color: #01d167;
+      border-radius: 12px;
+      width: 414px;
+      box-sizing: border-box;
+      margin: auto;
+      padding: 27px;
+      color: white;
+      font-weight: bold;
+
+      &.freezed {
+        opacity: 30%;
+        pointer-events: none;
+      }
+
+      .masked-card-number {
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+        background-color: white;
+      }
+
+      .customer-name {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        letter-spacing: 0.58px;
+      }
+
+      .card-number-container {
+        gap: 27px;
+
+        &-item {
+          gap: 7px;
+        }
+
+        .visible-number {
+          letter-spacing: 3.46px;
+        }
+      }
+
+      .masked-cvv {
+        font-size: 24px;
+        line-height: 25px;
+      }
+
+      .expiry-cvv {
+        font-size: 13px;
+      }
+    }
+
+    .debit-cards-selector {
+      display: flex;
+      gap: 8px;
+      width: 414px;
+      margin: 16px auto 0 auto;
+      justify-content: center;
+
+      &-item {
+        width: 8px;
+        height: 8px;
+        opacity: 20%;
+        background-color: #01d167;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &.selected {
+          width: 16px;
+          border-radius: 12px;
+          opacity: 100%;
+          cursor: auto;
+        }
+      }
+    }
+
+    .card-actions-container {
+      background-color: #edf3ff;
+      padding: 20px 30px 20px 30px;
+      border-radius: 12px;
+      margin-top: 32px;
+
+      &-item {
+        align-items: center;
+        text-align: center;
+
+        &.freeze-action {
+          width: 76px;
+        }
+
+        img {
+          height: 32px;
+          width: 32px;
+          margin-bottom: 8px;
+        }
+      }
+    }
+  }
+
+  .menu-option {
+    padding: 24px;
+    border: 1px solid #f5f5f5;
+    box-shadow: 0px 0px 8px #0000000a;
+    border-radius: 8px;
+    background-color: #f5f9ff;
+    color: #0c365a;
+    gap: 12px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+  }
+
+  .transactions-container {
+    &-item {
+      padding: 24px;
+      display: flex;
+      gap: 12px;
+
+      &-title {
+        color: #222222;
+        font-weight: 600;
+      }
+
+      &-date {
+        color: #aaaaaa;
+        font-size: 13px;
+        margin-bottom: 12px;
+      }
+
+      &-amt {
+        font-weight: bold;
+        color: #222222;
+        gap: 10px;
+
+        &.credit {
+          color: #01d167;
+        }
+      }
+
+      &-info {
+        font-size: 12px;
+        gap: 8px;
+        font-weight: 600;
+        color: #325baf;
+
+        &-img {
+          height: 20px;
+          width: 24px;
+          border-radius: 43%;
+          background-color: #325baf;
+        }
+      }
+
+      &-img {
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+        background-color: #009dff1a;
+      }
+    }
+  }
+
+  .view-all-txn {
+    padding: 16px;
+    background-color: #edfff5;
+    color: #01d167;
+    border-radius: 0 0 10px 10px;
+    font-weight: 600;
+    font-size: 13px;
+    margin-top: -7px;
+    z-index: -1;
+    position: relative;
+    border: 1px solid #ddffec;
+  }
+
+  .cvv-spacing {
+    letter-spacing: 3.46px;
+  }
+}
+
+.height-25 {
+  height: 25px;
+}
+
+.loader-content {
+  height: 500px;
+  width: 100%;
+}
+
+@media (max-width: 1320px) {
+  .cards-container {
+    flex-direction: column;
+
+    &-section {
+      &-1,
+      &-2 {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .debit-card {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .show-card,
+  .debit-cards-selector {
+    width: 100% !important;
+  }
+}

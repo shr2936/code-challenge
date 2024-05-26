@@ -1,0 +1,39 @@
+.sidebar {
+  background-color: #0c365a;
+  color: white;
+  padding: 48px 48px 150px 48px;
+
+  &-info-text {
+    font-size: 15px;
+    margin-top: 20px;
+    margin-bottom: 80px;
+    opacity: 30%;
+  }
+
+  &-options {
+    font-size: 16px;
+    display: flex;
+    gap: 60px;
+    flex-direction: column;
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      &.selected {
+        color: #01d167;
+
+        img {
+          filter: invert(58%) sepia(99%) saturate(844%) hue-rotate(100deg)
+            brightness(87%) contrast(108%);
+        }
+      }
+    }
+
+    img {
+      height: 24px;
+      width: 24px;
+    }
+  }
+}

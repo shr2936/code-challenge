@@ -1,0 +1,267 @@
+<div class="cards">
+  <div class="flex-justify-space-between">
+    <div class="available-balance d-flex-col">
+      <span>Available balance</span>
+      <div class="flex-align-center amt-info">
+        <div class="available-balance-icon">S$</div>
+        <span class="available-balance-amt">{{ balanceAmount }}</span>
+      </div>
+    </div>
+
+    <div
+      class="new-card mt-auto cursor-pointer"
+      data-toggle="modal"
+      data-target="#addCardModal"
+    >
+      <img src="assets/images/add.svg" />New card
+    </div>
+  </div>
+
+  <div *ngIf="!loadingCards; else loaderContent">
+    <div class="cards-toggle">
+      <div
+        *ngFor="let option of cardOptions"
+        [ngClass]="{ selected: selectedOption == option }"
+      >
+        {{ option }}
+      </div>
+    </div>
+
+    <div class="cards-container flex-justify-space-between">
+      <div class="cards-container-section-1">
+        <div class="show-card">
+          <div
+            *ngIf="!showCardNumber; else hideCardTemplate"
+            class="flex-align-center cursor-pointer"
+            (click)="onToggleShowCard()"
+          >
+            <img src="assets/images/eye.svg" />Show card number
+          </div>
+          <ng-template #hideCardTemplate>
+            <div class="cursor-pointer" (click)="onToggleShowCard()">
+              Hide card number
+            </div>
+          </ng-template>
+        </div>
+
+        <div
+          class="debit-card"
+          [ngClass]="{ freezed: debitCards[selectedCardIndex].isFreezed }"
+        >
+          <div class="text-align-end">
+            <img src="assets/images/aspire-logo-white.svg" />
+          </div>
+
+          <div class="customer-name">
+            {{ debitCards[selectedCardIndex].customerName }}
+          </div>
+
+          <div class="card-number-container flex-align-center">
+            <div
+              *ngFor="
+                let number of debitCards[selectedCardIndex].cardNumber;
+                let cardIdx = index
+              "
+              class="card-number-container-item d-flex"
+            >
+              <div
+                *ngIf="
+                  showCardNumber ||
+                    cardIdx ==
+                      debitCards[selectedCardIndex].cardNumber.length - 1;
+                  else maskedNumber
+                "
+                class="visible-number"
+              >
+                {{ number }}
+              </div>
+              <ng-template #maskedNumber>
+                <div
+                  *ngFor="let i of [1, 2, 3, 4]"
+                  class="masked-card-number"
+                ></div>
+              </ng-template>
+            </div>
+          </div>
+
+          <div class="d-flex mt-20 expiry-cvv">
+            <div class="mr-30">
+              Thru: <span>{{ debitCards[selectedCardIndex].expiry }}</span>
+            </div>
+            <div class="mr-1">CVV:</div>
+            <div
+              class="height-25"
+              [ngClass]="showCardNumber ? 'cvv-spacing' : 'masked-cvv'"
+            >
+              {{ showCardNumber ? debitCards[selectedCardIndex].cvv : "***" }}
+            </div>
+          </div>
+
+          <div class="text-align-end">
+            <img src="assets/images/visa-logo.svg" />
+          </div>
+        </div>
+
+        <div class="debit-cards-selector">
+          <div
+            *ngFor="let card of debitCards; let idx = index"
+            class="debit-cards-selector-item"
+            [ngClass]="{ selected: selectedCardIndex == idx }"
+            (click)="setSelectedCardIndex(idx)"
+          ></div>
+        </div>
+
+        <div class="card-actions-container flex-justify-space-between">
+          <div
+            (click)="onToggleFreezeCard()"
+            class="d-flex-col card-actions-container-item freeze-action"
+          >
+            <img src="assets/images/freeze-card.svg" class="cursor-pointer" />
+            <span class="cursor-pointer">{{
+              debitCards[selectedCardIndex].isFreezed
+                ? "Unfreeze card"
+                : "Freeze card"
+            }}</span>
+          </div>
+          <div
+            *ngFor="let action of cardActions"
+            class="d-flex-col card-actions-container-item"
+          >
+            <img [src]="action.imageUrl" class="cursor-pointer" />
+            <span class="cursor-pointer">{{ action.label }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards-container-section-2">
+        <div [ngClass]="{ 'container-border': showCardDetails }">
+          <div class="menu-option">
+            <img src="assets/images/details.svg" />Card details<img
+              class="ml-auto cursor-pointer"
+              src="assets/images/up-arrow.svg"
+              [ngClass]="{ 'rotate-180': !showCardDetails }"
+            />
+          </div>
+        </div>
+        <div>
+          <div [ngClass]="{ 'container-border': showRecentTxn }">
+            <div class="menu-option">
+              <img src="assets/images/transactions.svg" />Recent
+              transactions<img
+                class="ml-auto cursor-pointer"
+                src="assets/images/up-arrow.svg"
+                [ngClass]="{ 'rotate-180': !showRecentTxn }"
+                (click)="onShowRecentTxnToggle()"
+              />
+            </div>
+            <div *ngIf="showRecentTxn" class="transactions-container">
+              <div
+                *ngFor="let transaction of transactions"
+                class="transactions-container-item"
+              >
+                <div>
+                  <div
+                    class="transactions-container-item-img flex-justify-align-center"
+                  >
+                    <img [src]="transaction.imageUrl" />
+                  </div>
+                </div>
+                <div class="w-100">
+                  <div class="flex-justify-space-between mb-1">
+                    <div class="transactions-container-item-title">
+                      {{ transaction.title }}
+                    </div>
+                    <div
+                      class="transactions-container-item-amt flex-align-center"
+                      [ngClass]="{
+                        credit:
+                          transaction.transactionType == eTransactionType.CREDIT
+                      }"
+                    >
+                      <div>
+                        {{
+                          (transaction.transactionType ==
+                          eTransactionType.CREDIT
+                            ? "+ "
+                            : "- ") +
+                            "S$ " +
+                            transaction.amount
+                        }}
+                      </div>
+                      <div><img src="assets/images/next.svg" /></div>
+                    </div>
+                  </div>
+                  <div class="transactions-container-item-date">
+                    {{ transaction.date }}
+                  </div>
+                  <div
+                    class="transactions-container-item-info flex-align-center"
+                  >
+                    <div
+                      class="transactions-container-item-info-img flex-justify-align-center"
+                    >
+                      <img src="assets/images/business-and-finance.svg" />
+                    </div>
+                    <span>{{ transaction.info }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            *ngIf="showRecentTxn"
+            class="view-all-txn flex-justify-align-center"
+          >
+            View all card transactions
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loaderContent>
+  <div class="loader-content flex-justify-align-center">Loading...</div>
+</ng-template>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="addCardModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="addCardModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCardModalLabel">Add new card</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>Enter card name</div>
+        <input
+          type="text"
+          placeholder="Enter card name"
+          [(ngModel)]="newCardName"
+        />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="!newCardName"
+          (click)="addNewCard()"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="sidebar">
+  <div><img src="assets/images/aspire-logo.svg" /></div>
+  <div class="sidebar-info-text">
+    Trusted way of banking for 3,000+ SMEs and startups in Singapore
+  </div>
+  <div class="sidebar-options">
+    <div
+      *ngFor="let option of menuOptions"
+      class="option cursor-pointer"
+      [ngClass]="{ selected: option.isSelected }"
+    >
+      <img [src]="option.imageUrl" /><span>{{ option.label }}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+.app {
+  display: flex;
+
+  &-section-1 {
+    width: 23%;
+  }
+
+  &-section-2 {
+    width: 77%;
+  }
+}
